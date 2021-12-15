@@ -1,7 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Text;
 using System.Threading;
 
 namespace DevOps_Case
@@ -21,6 +23,7 @@ namespace DevOps_Case
             Console.WriteLine("CoinMarketCap = c or C");
             Console.WriteLine();
             // Console.WriteLine("Your choice: ");
+            System.Text.StringBuilder csvBuilder = new StringBuilder();
 
             // fill var webChoice
             webChoice = Console.ReadLine();
@@ -80,11 +83,11 @@ namespace DevOps_Case
 
                     // get amount of views
                     string views = "(//*[@id=\"metadata-line\"]/span[1])[" + a + "]";
-                    var videoviews = driver.FindElement(By.XPath(views)).Text;
+                    var videoViews = driver.FindElement(By.XPath(views)).Text;
 
                     // get name of youtube channel
                     string channel = "/html/body/ytd-app/div/ytd-page-manager/ytd-search/div[1]/ytd-two-column-search-results-renderer/div/ytd-section-list-renderer/div[2]/ytd-item-section-renderer/div[3]/ytd-video-renderer[" + a + "]/div[1]/div/div[2]/ytd-channel-name/div/div/yt-formatted-string/a";
-                    var videochannel = driver.FindElement(By.XPath(channel)).Text;
+                    var videoChannel = driver.FindElement(By.XPath(channel)).Text;
 
                     // get url of youtube video
                     string url = "/html/body/ytd-app/div/ytd-page-manager/ytd-search/div[1]/ytd-two-column-search-results-renderer/div/ytd-section-list-renderer/div[2]/ytd-item-section-renderer/div[3]/ytd-video-renderer[" + a + "]/div[1]/ytd-thumbnail/a";
@@ -93,20 +96,20 @@ namespace DevOps_Case
                     string videourl = url1.GetAttribute("href");
 
                     Console.WriteLine(videotitle);
-                    Console.WriteLine(videoviews);
-                    Console.WriteLine(videochannel);
+                    Console.WriteLine(videoViews);
+                    Console.WriteLine(videoChannel);
                     Console.WriteLine(videourl);
 
-                    // append data to csv file ("\r\n" means new line for next line to append)
-                    System.IO.File.AppendAllText(csvFilePath, "VIDEO " + a + ":" + "\r\n");
-                    System.IO.File.AppendAllText(csvFilePath, "TITLE: " + videotitle + "\r\n");
-                    System.IO.File.AppendAllText(csvFilePath, "VIEWS: " + videoviews + "\r\n");
-                    System.IO.File.AppendAllText(csvFilePath, "CHANNEL: " + videochannel + "\r\n");
-                    System.IO.File.AppendAllText(csvFilePath, "URL: " + videourl + "\r\n");
-                    System.IO.File.AppendAllText(csvFilePath, " " + "\r\n");
+                    csvBuilder.Append("\"" + videotitle + "\"");
+                    csvBuilder.Append(";");
+                    csvBuilder.Append("\"" + videoViews + "\"");
+                    csvBuilder.Append(";");
+                    csvBuilder.Append("\"" + videoChannel + "\"");
+                    csvBuilder.Append(";");
+                    csvBuilder.Append("\"" + videourl + "\"");
+                    csvBuilder.Append("\n");
                 }
-                Console.WriteLine();
-                Console.WriteLine("*************************************");
+                File.AppendAllText(csvFilePath, csvBuilder.ToString());
             }
             else if (webChoice == "i" || webChoice == "I")
             {
@@ -212,15 +215,16 @@ namespace DevOps_Case
                     Console.WriteLine();
                     Console.WriteLine("******************************");
 
-                    System.IO.File.AppendAllText(csvFilePath, "JOB " + (i + 1).ToString() + "\r\n");
-
-                    System.IO.File.AppendAllText(csvFilePath, jobs[i] + "\r\n");
-                    System.IO.File.AppendAllText(csvFilePath, names[i] + "\r\n");
-                    System.IO.File.AppendAllText(csvFilePath, locations[i] + "\r\n");
-                    System.IO.File.AppendAllText(csvFilePath, links[i] + "\r\n");
-                    System.IO.File.AppendAllText(csvFilePath, " " + "\r\n");
+                    csvBuilder.Append("\"" + jobs[i] + "\"");
+                    csvBuilder.Append(";");
+                    csvBuilder.Append("\"" + names[i] + "\"");
+                    csvBuilder.Append(";");
+                    csvBuilder.Append("\"" + locations[i] + "\"");
+                    csvBuilder.Append(";");
+                    csvBuilder.Append("\"" + links[i] + "\"");
+                    csvBuilder.Append("\n");
                 }
-                System.IO.File.AppendAllText(csvFilePath, "New Search: " + "\r\n");
+                File.AppendAllText(csvFilePath, csvBuilder.ToString());
             }
             else if (webChoice == "c" || webChoice == "C")
             {
@@ -228,6 +232,8 @@ namespace DevOps_Case
                 Console.WriteLine("You chose to scrape CoinMarketCap!");
                 Console.WriteLine("Do you want a particular Coin or a list of the top 100 coins? (Type 'COIN' or 'LIST')");
                 string choice = Console.ReadLine();
+
+                System.Text.StringBuilder svcBuilder = new StringBuilder();
 
                 if (choice == "COIN" || choice == "coin" || choice == "Coin")
                 {
@@ -270,16 +276,23 @@ namespace DevOps_Case
                     Console.WriteLine(coinMarketDominance);
                     Console.WriteLine(coinMarketCap);
 
-                    // Export all data to csv file
-                    System.IO.File.AppendAllText(csvFilePath, "COINMARKETCAP INFO" + "\r\n");
-                    System.IO.File.AppendAllText(csvFilePath, "Name: " + coinName + "\r\n");
-                    System.IO.File.AppendAllText(csvFilePath, "Price In USD: " + coinPrice + "\r\n");
-                    System.IO.File.AppendAllText(csvFilePath, "Coin Change Last 24 Hours: " + coinChange24H + "\r\n");
-                    System.IO.File.AppendAllText(csvFilePath, "Coin Volume Last 24 Hours: " + coinVolume24H + "\r\n");
-                    System.IO.File.AppendAllText(csvFilePath, "Rank Of Coin: " + coinRank + "\r\n");
-                    System.IO.File.AppendAllText(csvFilePath, "Dominance Percentage: " + coinMarketDominance + "\r\n");
-                    System.IO.File.AppendAllText(csvFilePath, "Maerket Cap in USD: " + coinMarketCap + "\r\n");
-                    System.IO.File.AppendAllText(csvFilePath, " " + "\r\n");
+
+                    csvBuilder.Append("\"" + coinName + "\"");
+                    csvBuilder.Append(";");
+                    csvBuilder.Append("\"" + coinPrice + "\"");
+                    csvBuilder.Append(";");
+                    csvBuilder.Append("\"" + coinChange24H + "\"");
+                    csvBuilder.Append(";");
+                    csvBuilder.Append("\"" + coinVolume24H + "\"");
+                    csvBuilder.Append(";");
+                    csvBuilder.Append("\"" + coinRank + "\"");
+                    csvBuilder.Append(";");
+                    csvBuilder.Append("\"" + coinMarketDominance + "\"");
+                    csvBuilder.Append(";");
+                    csvBuilder.Append("\"" + coinMarketCap + "\"");
+                    csvBuilder.Append("\n");
+
+                    File.AppendAllText(csvFilePath, csvBuilder.ToString());
                 }
                 else if (choice == "LIST" || choice == "list" || choice == "List")
                 {
@@ -325,14 +338,16 @@ namespace DevOps_Case
                         Console.WriteLine(coinVolume24H);
                         Console.WriteLine("------------------");
 
-                        // export all data to csv file
-                        System.IO.File.AppendAllText(csvFilePath, "Coin rank: " + (i).ToString() + "\r\n");
-                        System.IO.File.AppendAllText(csvFilePath, "Name: " + coinName + "\r\n");
-                        System.IO.File.AppendAllText(csvFilePath, "Price in USD" + coinPrice + "\r\n");
-                        System.IO.File.AppendAllText(csvFilePath, "Market Cap in USD" + coinMarketCap + "\r\n");
-                        System.IO.File.AppendAllText(csvFilePath, "Volume in the last 24 hours in " + coinName + ": " + coinVolume24H + "\r\n");
-                        System.IO.File.AppendAllText(csvFilePath, " " + "\r\n");
+                        csvBuilder.Append("\"" + coinName + "\"");
+                        csvBuilder.Append(";");
+                        csvBuilder.Append("\"" + coinPrice + "\"");
+                        csvBuilder.Append(";");
+                        csvBuilder.Append("\"" + coinVolume24H + "\"");
+                        csvBuilder.Append(";");
+                        csvBuilder.Append("\"" + coinMarketCap + "\"");
+                        csvBuilder.Append("\n");
                     }
+                    File.AppendAllText(csvFilePath, csvBuilder.ToString());
                 }
             }
             else
