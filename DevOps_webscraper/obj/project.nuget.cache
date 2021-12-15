@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "XTwVfpqVBcpNuvF/eHzfIg2RMLtr/hlI1w9hkc/eS4B4KzsmlWcUhWLeCCFmUsBvYYY4BWicRlY+dn0nkH5XHw==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Bert\\Desktop\\School\\2ITF\\devops\\Case_study\\Final_version\\DevOps_webscraper\\DevOps_webscraper\\DevOps_webscraper.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Bert\\.nuget\\packages\\newtonsoft.json\\12.0.3\\newtonsoft.json.12.0.3.nupkg.sha512",
+    "C:\\Users\\Bert\\.nuget\\packages\\selenium.webdriver\\4.1.0\\selenium.webdriver.4.1.0.nupkg.sha512"
+  ],
+  "logs": []
+}
