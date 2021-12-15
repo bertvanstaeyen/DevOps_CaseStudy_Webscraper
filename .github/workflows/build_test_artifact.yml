@@ -1,13 +1,5 @@
-name: build, test and upload artifact
-
-on:
-  push:
-  pull_request:
-    branches: [ master ]
-    paths:
-    - 'DevOps_webscraper/Program.cs'
-    - 'DevOps_webscraper/DevOps_webscraper.csproj'
-
+name: Build And Artifact
+on: [push, pull_request, workflow_dispatch]
 env:
   DOTNET_VERSION: '5.0.301' # The .NET SDK version to use
 
@@ -18,7 +10,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [windows-latest] #ubuntu-latest, macos-latest, 
+        os: [windows-latest]
 
     steps:
     - uses: actions/checkout@v2
@@ -29,16 +21,15 @@ jobs:
 
     - name: Install dependencies
       run: dotnet restore
-      
+
     - name: Build
       run: dotnet build --configuration Release --no-restore
-    
+
     - name: Test
       run: dotnet test --no-restore --verbosity normal
       
-    - name: Upload a Build Artifact
-      uses: actions/upload-artifact@v2.2.2
+    - name: Upload Artifacts
+      uses: actions/upload-artifact@v2.2.4
       with:
-        # Artifact name
-        name: Webscraper #.zip will be added automatically
-        path: "./DevOps_webscraper/bin/Release/net5.0"
+          name: Scraper
+          path: "./bin/Release"
