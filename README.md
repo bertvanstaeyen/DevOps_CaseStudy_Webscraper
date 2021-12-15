@@ -2,9 +2,14 @@
 
 
 Github actions deployment file:
+
+
 ```
 name: build, test and upload artifact
-
+```
+When any changes happen to the repo this file will be reexecuted.
+This file will build, publish and test the .sln file of this project
+```
 on:
   push:
   pull_request:
@@ -15,7 +20,9 @@ on:
 
 env:
   DOTNET_VERSION: '5.0.301' # The .NET SDK version to use
-
+```
+All the defined jobs will now execute
+```
 jobs:
   build-and-test:
 
@@ -44,11 +51,13 @@ jobs:
     
     - name: Test
       run: dotnet test --no-restore --verbosity normal
+```
       
+Upload artifact from defined path
+```
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v2.2.2
       with:
-        # Artifact name
         name: Webscraper #.zip will be added automatically
         path: "./DevOps_webscraper/bin/Debug/net5.0/win-x64/publish/"
 ```
