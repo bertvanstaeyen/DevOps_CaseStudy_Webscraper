@@ -41,4 +41,4 @@ jobs:
       with:
         # Artifact name
         name: Webscraper #.zip will be added automatically
-        path: "./bin/Release/"
+        path: "./DevOps_webscraper/bin/Release/"
