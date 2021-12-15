@@ -1,5 +1,12 @@
-name: Build And Artifact
-on: [push, pull_request, workflow_dispatch]
+name: build, test and upload artifact
+on:
+  push:
+  pull_request:
+    branches: [ master ]
+    paths:
+    - 'DevOps_webscraper/Program.cs'
+    - 'DevOps_webscraper/DevOps_webscraper.csproj'
+
 env:
   DOTNET_VERSION: '5.0.301' # The .NET SDK version to use
 
