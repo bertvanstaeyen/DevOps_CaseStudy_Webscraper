@@ -31,7 +31,7 @@ jobs:
       run: dotnet restore
       
     - name: Build
-      run: dotnet publish -r win-x64 -c Release /p:PublishSingleFile=true /p:PublishTrimmed=true
+      run: dotnet publish --no-restore --verbosity normal
     
     - name: Test
       run: dotnet test --no-restore --verbosity normal
