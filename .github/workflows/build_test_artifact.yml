@@ -18,7 +18,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
+        os: [windows-latest]
 
     steps:
     - uses: actions/checkout@v2
@@ -31,7 +31,7 @@ jobs:
       run: dotnet restore
       
     - name: Build
-      run: dotnet publish --no-restore --verbosity normal
+      run: dotnet build --no-restore --verbosity normal
     
     - name: Test
       run: dotnet test --no-restore --verbosity normal
@@ -41,4 +41,4 @@ jobs:
       with:
         # Artifact name
         name: Webscraper #.zip will be added automatically
-        path: "./DevOps_webscraper/bin/Release/net5.0/win-x64/publish"
+        path: "./DevOps_webscraper/bin/Release/net5.0/win-x64"
