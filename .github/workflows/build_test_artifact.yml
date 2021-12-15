@@ -5,8 +5,8 @@ on:
   pull_request:
     branches: [ master ]
     paths:
-    - 'DevOps_webscraper/Program.cs'
-    - 'DevOps_webscraper/DevOps_webscraper.csproj'
+    - 'DevOps_webscraper.sln'
+
 
 env:
   DOTNET_VERSION: '5.0.301' # The .NET SDK version to use
@@ -41,4 +41,4 @@ jobs:
       with:
         # Artifact name
         name: Webscraper #.zip will be added automatically
-        path: "./DevOps_webscraper/bin/Release/net5.0/win-x64"
+        path: "./DevOps_webscraper/bin/Release/"
