@@ -33,7 +33,7 @@ jobs:
     - name: Build
       run: dotnet build --configuration Release --no-restore
     
-    - name: dotnet publish
+    - name: publish
       run: |
           dotnet publish
     
@@ -46,4 +46,4 @@ jobs:
       with:
         # Artifact name
         name: Webscraper #.zip will be added automatically
-        path: "./DevOps_webscraper/bin/Release/"
+        path: "./DevOps_webscraper/bin/Debug/net5.0/win-x64/publish/"
