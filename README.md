@@ -59,5 +59,5 @@ Upload artifact from defined path
       uses: actions/upload-artifact@v2.2.2
       with:
         name: Webscraper #.zip will be added automatically
-        path: "./DevOps_webscraper/bin/Debug/net5.0/win-x64/publish/"
+        path: "./DevOps_webscraper/bin/Debug/net5.0/win-x64/publish/*.exe"
 ```
