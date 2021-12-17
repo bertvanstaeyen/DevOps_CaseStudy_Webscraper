@@ -27,8 +27,8 @@ jobs:
       with:
         dotnet-version: ${{ env.DOTNET_VERSION }}
 
-    #- name: Install dependencies
-    #  run: dotnet restore
+    - name: Install dependencies
+      run: dotnet restore
       
     #- name: Build
     #  run: dotnet build --configuration Release --no-restore
@@ -37,8 +37,8 @@ jobs:
       run: |
           dotnet publish -r win-x64 -c Release /p:PublishSingleFile=true
     
-    - name: Test
-      run: dotnet test --no-restore --verbosity normal
+    #- name: Test
+    #  run: dotnet test --no-restore --verbosity normal
       
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v2.2.2
