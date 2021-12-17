@@ -1,8 +1,9 @@
-# DevOps Case Study - Webscraper with Selenium and CI/CD GitHub Pipeline
+# DevOps & Security Case Study - Webscraper with Selenium and CI/CD GitHub Pipeline - Bert Van Staeyen
 
+For this application you will need a chromdriver. This can be can downloaded at this url: http://chromedriver.storage.googleapis.com/index.html.
+You will need to make sure you download the right version because it can differ depending on the version of chrome your running. To check the version click on the 3 dots next to your google profile picture. then go to settings. and in the end go to About Chrome. Now you now wich version you will need to install.
 
-Github actions deployment file:
-
+# Github actions deployment file:
 
 ```
 name: build, test and upload artifact
@@ -42,15 +43,15 @@ jobs:
     - name: Install dependencies
       run: dotnet restore
       
-    - name: Build
-      run: dotnet build --configuration Release --no-restore
+    #- name: Build
+    #  run: dotnet build --configuration Release --no-restore
     
     - name: publish
       run: |
-          dotnet publish
+          dotnet publish -r win-x64 -c Release /p:PublishSingleFile=true /p:IncludeNativeLibrariesForSelfExtract=true --self-contained true
     
-    - name: Test
-      run: dotnet test --no-restore --verbosity normal
+    #- name: Test
+    #  run: dotnet test --no-restore --verbosity normal
 ```
       
 Upload artifact from defined path
@@ -58,6 +59,7 @@ Upload artifact from defined path
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v2.2.2
       with:
+        # Artifact name
         name: Webscraper #.zip will be added automatically
-        path: "./DevOps_webscraper/bin/Debug/net5.0/win-x64/publish/*.exe"
+        path: "./DevOps_webscraper/bin/Release/net5.0/win-x64/publish/**.exe"
 ```
