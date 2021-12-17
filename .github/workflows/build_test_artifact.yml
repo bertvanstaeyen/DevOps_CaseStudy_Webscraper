@@ -35,7 +35,7 @@ jobs:
     
     - name: publish
       run: |
-          dotnet publish -r win-x64 -c Release /p:PublishSingleFile=true --no-restore
+          dotnet publish -r win-x64 -c Release /p:PublishSingleFile=true /p:IncludeNativeLibrariesForSelfExtract=true --self-contained true
     
     #- name: Test
     #  run: dotnet test --no-restore --verbosity normal
@@ -45,4 +45,4 @@ jobs:
       with:
         # Artifact name
         name: Webscraper #.zip will be added automatically
-        path: "./DevOps_webscraper/bin/Release/net5.0/win-x64/publish/**.exe"
+        path: "./DevOps_webscraper/bin/Release/net5.0/win-x64/publish/"
